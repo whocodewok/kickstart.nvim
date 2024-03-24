@@ -78,7 +78,8 @@ return {
       --  * "prepend_note_path", e.g. '[[foo-bar.md|Foo Bar]]'
       --  * "use_path_only", e.g. '[[foo-bar.md]]'
       wiki_link_func = 'use_alias_only',
-      vim.keymap.set('n', '<leader>oi', ':ObsidianPasteImg<CR>', { desc = '[O]bsidian Paste [I]mage' })
+      vim.keymap.set('n', '<leader>op', ':ObsidianPasteImg<CR>', { desc = '[O]bsidian [P]aste image' }),
+      vim.keymap.set('n', '<leader>oj', ':ObsidianToday<CR>', { desc = '[O]bsidian create new [J]ournal' }),
     }
   end,
 }
