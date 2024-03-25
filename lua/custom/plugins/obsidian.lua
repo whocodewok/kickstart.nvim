@@ -15,6 +15,11 @@ return {
     'nvim-lua/plenary.nvim',
   },
   config = function()
+    -- Get the current time
+    local currentTime = os.time()
+    -- Format the current time into "YYYYMMDD_HHMMSS" format
+    local formattedDateTime = os.date('%Y-%m-%d_%H-%M', currentTime)
+
     local workspace_path
     if vim.fn.has 'win32' == 1 then
       workspace_path = 'C:\\Logs\\nvimlog'
@@ -37,7 +42,15 @@ return {
         -- Optional, if you want to change the date format of the default alias of daily notes.
         alias_format = '%B %-d, %Y',
         -- Optional, if you want to automatically insert a template from your template directory like 'daily.md'
-        template = nil,
+        template = 'journal-template',
+      },
+      -- Optional, for templates (see below).
+      templates = {
+        subdir = 'templates',
+        date_format = '%Y-%m-%d',
+        time_format = '%H-%M',
+        -- A map for custom variables, the key should be the variable and the value a function
+        substitutions = {},
       },
       completion = {
         nvim_cmp = true,
@@ -66,11 +79,13 @@ return {
             suffix = suffix .. string.char(math.random(65, 90))
           end
         end
-        -- Get the current time
-        local currentTime = os.time()
-        -- Format the current time into "YYYYMMDD_HHMMSS" format
-        local formattedDateTime = os.date('%Y-%m-%d_%H-%M', currentTime)
         return formattedDateTime .. '_' .. suffix
+      end,
+      -- Optional, customize the default name or prefix when pasting images via `:ObsidianPasteImg`.
+      ---@return string
+      image_name_func = function()
+        -- Prefix image names with timestamp.
+        return string.format('%s-', formattedDateTime)
       end,
       -- Optional, customize how wiki links are formatted. You can set this to one of:
       --  * "use_alias_only", e.g. '[[Foo Bar]]'
