@@ -85,7 +85,7 @@ return {
       ---@return string
       image_name_func = function()
         -- Prefix image names with timestamp.
-        return string.format('%s-', formattedDateTime)
+        return string.format('%s_', formattedDateTime)
       end,
       -- Optional, customize how wiki links are formatted. You can set this to one of:
       --  * "use_alias_only", e.g. '[[Foo Bar]]'

@@ -3,7 +3,8 @@ return { -- You can easily change to a different colorscheme.
   -- change the command in the config to whatever the name of that colorscheme is.
   --
   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-  'maxmx03/solarized.nvim',
+  -- 'sainnhe/sonokai',
+  'ellisonleao/gruvbox.nvim',
   priority = 1000, -- Make sure to load this before all the other start plugins.
   init = function()
     -- Load the colorscheme here.
@@ -11,11 +12,11 @@ return { -- You can easily change to a different colorscheme.
     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
     -- vim.cmd.colorscheme 'tokyonight-night'
 
-    vim.o.background = 'light' -- or 'dark'
-    vim.cmd.colorscheme 'solarized'
+    vim.o.background = 'light'
+    -- vim.o.background = 'dark'
+    vim.cmd.colorscheme 'gruvbox'
 
     -- You can configure highlights by doing something like:
     vim.cmd.hi 'Comment gui=none'
   end,
 }
-
