@@ -154,15 +154,61 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
+-- vim.opt.tabstop = 4
+
+vim.opt.colorcolumn = '81'
+
+vim.opt.textwidth = 80
+
+-- vim.opt.wrap = true
+-- same as auto-wrap text using 'textwidth'
+-- formatoptions.append 't'
+-- it seems some plugin has already set this option
+
+-- linebreak is false, but the wraped line are breaked, maybe because of some plugin
+vim.opt.linebreak = true
+
+-- can't be removed, maybe some plugin has set this option
+-- vim.opt.formatoptions:remove 'l'
+
+-- formatoptions a won't work with ``` code blocks, maybe because ``` are not recognized as comments
+-- vim.opt.formatoptions:append 'a'
+
+-- useful when wrapping chinese
+vim.opt.formatoptions:append 'm'
+
+-- vim.opt.formatoptions:remove('n')
+
+-- vim.opt.formatexpr = "v:lua.custom_formatexpr(vim.fn.getline('.'))"
+
+-- function _G.custom_formatexpr(line)
+--   print("custom_formatexpr function called")
+
+--   print("Line:", line)
+--   -- Check if the line starts with a bullet point or a number followed by a dot
+--   if string.match(line, '^%s*[-*+]%s+') or string.match(line, '^%s*%d+%.%s+') then
+--       -- Indent to the first non-whitespace character after the bullet point or number
+--       return vim.fn.match(line, '^%s*%S')
+--   else
+--       -- Use the default formatting behavior for other lines
+--       return '='
+--   end
+-- end
+
+-- Define a simple function to print a message
+function printMessage()
+  print("Hello from Neovim Lua!")
+end
+
+-- Map a key to trigger the function
+vim.api.nvim_set_keymap('n', '<leader>p', ':lua printMessage()<CR>', { noremap = true, silent = true })
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-
--- obsidian setting
-vim.opt.conceallevel = 1
 
 -- vim.g.markdown_fenced_languages = { 'html', 'python', 'lua', 'vim', 'typescript', 'javascript', 'markdown' }
 

@@ -18,7 +18,13 @@ return {
     -- Get the current time
     local currentTime = os.time()
     -- Format the current time into "YYYYMMDD_HHMMSS" format
-    local formattedDateTime = os.date('%Y-%m-%d_%H-%M', currentTime)
+    local notePrefix = os.date('%Y-%m-%d_%H-%M', currentTime)
+    local imagePrefix = os.date('%Y-%m-%d', currentTime)
+
+    -- for syntax highlighting
+    vim.opt.conceallevel = 1
+
+    vim.g.vim_markdown_strikethrough = 1
 
     local workspace_path
     if vim.fn.has 'win32' == 1 then
@@ -79,14 +85,35 @@ return {
             suffix = suffix .. string.char(math.random(65, 90))
           end
         end
-        return formattedDateTime .. '_' .. suffix
+        return notePrefix .. '_' .. suffix
       end,
       -- Optional, customize the default name or prefix when pasting images via `:ObsidianPasteImg`.
       ---@return string
       image_name_func = function()
         -- Prefix image names with timestamp.
-        return string.format('%s_', formattedDateTime)
+        return string.format('%s_', imagePrefix)
       end,
+      -- Specify how to handle attachments.
+      attachments = {
+        -- The default folder to place images in via `:ObsidianPasteImg`.
+        -- If this is a relative path it will be interpreted as relative to the vault root.
+        -- You can always override this per image by passing a full path to the command instead of just a filename.
+        img_folder = 'assets/imgs',
+        -- A function that determines the text to insert in the note when pasting an image.
+        -- It takes two arguments, the `obsidian.Client` and an `obsidian.Path` to the image file.
+        -- This is the default implementation.
+        ---@param client obsidian.Client
+        ---@param path obsidian.Path the absolute path to the image file
+        ---@return string
+        img_text_func = function(client, path)
+          path = client:vault_relative_path(path) or path
+          -- Remove the prefix formatted as '%Y-%m-%d_' from the file name
+          local fileName = string.gsub(path.name, "^%d%d%d%d%-%d%d%-%d%d%_", "")
+          -- Remove the file type suffix such as '.png'
+          fileName = string.gsub(fileName, "%.([^%.]*)$", "")
+          return string.format('![%s](%s)', fileName, path)
+        end,
+      },
       -- Optional, customize how wiki links are formatted. You can set this to one of:
       --  * "use_alias_only", e.g. '[[Foo Bar]]'
       --  * "prepend_note_id", e.g. '[[foo-bar|Foo Bar]]'
