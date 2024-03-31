@@ -40,8 +40,8 @@ local function box_trim_lines(str)
     return new_str
 end
 
-local date = function()
-    return { os.date "%Y-%m-%d" }
+local datetime = function()
+    return { os.date "%Y-%m-%d %H:%M:%S" }
 end
 
 local filename = function()
@@ -51,34 +51,34 @@ end
 ls.add_snippets(nil, {
     all = {
         snip({
-            trig = "date",
-            namr = "Date",
-            dscr = "Date in the form of YYYY-MM-DD",
+            trig = "jetzt",
+            namr = "DateTime",
+            dscr = "Current Date Time in the form of YYYY-MM-DD HH:MM:SS",
         }, {
-            func(date, {}),
+            func(datetime, {}),
         }),
-        snip({
-            trig = "pwd",
-            namr = "PWD",
-            dscr = "Path to current working directory",
-        }, {
-            func(bash, {}, { user_args = { "pwd" } }),
-        }),
-        snip({
-            trig = "filename",
-            namr = "Filename",
-            dscr = "Absolute path to file",
-        }, {
-            func(filename, {}),
-        }),
-        snip({
-            trig = "signature",
-            namr = "Signature",
-            dscr = "Name and Surname",
-        }, {
-            text "Sergei Bulavintsev",
-            insert(0),
-        }),
+        -- snip({ -- will break luasnip in windows
+        --     trig = "pwd",
+        --     namr = "PWD",
+        --     dscr = "Path to current working directory",
+        -- }, {
+        --     func(bash, {}, { user_args = { "pwd" } }),
+        -- }),
+        -- snip({
+        --     trig = "filename",
+        --     namr = "Filename",
+        --     dscr = "Absolute path to file",
+        -- }, {
+        --     func(filename, {}),
+        -- }),
+        -- snip({
+        --     trig = "signature",
+        --     namr = "Signature",
+        --     dscr = "Surname, Forename",
+        -- }, {
+        --     text "Huang, Jinhui",
+        --     insert(0),
+        -- }),
     },
     sh = {
         snip("shebang", {
@@ -150,7 +150,30 @@ ls.add_snippets(nil, {
         }),
     },
     markdown = {
-        -- Select link, press C-s, enter link to receive snippet
+        -- the copied content will be initialized as the description of the snippet
+        -- don't know how to change this behavior
+        -- snip({
+        --     trig = "x-code-block",
+        --     name = "markdown_code_empty",
+        -- }, {
+        --     text "``` ",
+        --     insert(1, "Language"),
+        --     text { "", "" },
+        --     func(function(_, snip)
+        --         local clipboard_content = vim.fn.getreg("+") -- Get content of the clipboard
+        --         local lines = {} -- Table to store lines from clipboard
+            
+        --         -- Iterate over each line in the clipboard content and store it in the table
+        --         for line in clipboard_content:gmatch("[^\r\n]+") do
+        --             table.insert(lines, line)
+        --         end
+
+        --         return lines -- Return all the lines that was splited as separate lines
+        --     end),
+        --     text { "", "```", "" },
+        --     insert(0),
+        -- }),
+        -- Select link, press Tab, enter link to receive snippet
         snip({
             trig = "link",
             namr = "markdown_link",
@@ -165,32 +188,32 @@ ls.add_snippets(nil, {
             text ")",
             insert(0),
         }),
+        -- snip({ -- select code block, press Tab, enter language
+        --     trig = "codewrap",
+        --     namr = "markdown_code_wrap",
+        --     dscr = "Create markdown code block from existing text",
+        -- }, {
+        --     text "``` ",
+        --     insert(1, "Language"),
+        --     text { "", "" },
+        --     func(function(_, snip)
+        --         local tmp = {}
+        --         tmp = snip.env.TM_SELECTED_TEXT
+        --         tmp[0] = nil
+        --         return tmp or {}
+        --     end, {}),
+        --     text { "", "```", "" },
+        --     insert(0),
+        -- }),
         snip({
-            trig = "codewrap",
-            namr = "markdown_code_wrap",
-            dscr = "Create markdown code block from existing text",
-        }, {
-            text "``` ",
-            insert(1, "Language"),
-            text { "", "" },
-            func(function(_, snip)
-                local tmp = {}
-                tmp = snip.env.TM_SELECTED_TEXT
-                tmp[0] = nil
-                return tmp or {}
-            end, {}),
-            text { "", "```", "" },
-            insert(0),
-        }),
-        snip({
-            trig = "codeempty",
+            trig = "cb",
             namr = "markdown_code_empty",
             dscr = "Create empty markdown code block",
         }, {
             text "``` ",
             insert(1, "Language"),
             text { "", "" },
-            insert(2, "Content"),
+            insert(2),
             text { "", "```", "" },
             insert(0),
         }),

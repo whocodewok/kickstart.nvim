@@ -177,8 +177,11 @@ vim.opt.linebreak = true
 -- useful when wrapping chinese
 vim.opt.formatoptions:append 'm'
 
+-- when editing markdown, it seems like 'n' can not be removed
+-- but 'n' is useful, it can recognize `1. ` as a list item
 -- vim.opt.formatoptions:remove('n')
 
+-- Doesn't work
 -- vim.opt.formatexpr = "v:lua.custom_formatexpr(vim.fn.getline('.'))"
 
 -- function _G.custom_formatexpr(line)
@@ -202,6 +205,8 @@ end
 
 -- Map a key to trigger the function
 vim.api.nvim_set_keymap('n', '<leader>p', ':lua printMessage()<CR>', { noremap = true, silent = true })
+
+-- vim.api.nvim_command('resize 10')
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
