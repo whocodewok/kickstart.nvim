@@ -54,11 +54,16 @@ return { -- Fuzzy Finder (files, lsp, etc)
       -- You can put your default mappings / updates / etc. in here
       --  All the info you're looking for is in `:help telescope.setup()`
       --
-      -- defaults = {
-      --   mappings = {
-      --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-      --   },
-      -- },
+      defaults = {
+        -- mappings = {
+        --   i = { ['<c-enter>'] = 'to_fuzzy_refine' },
+        -- },
+        -- haven't figured out why the following not working
+        -- but add the folder name to .gitignore worked
+        -- file_ignore_patterns = {
+        --   "^logseq/.*",
+        -- },
+      },
       -- pickers = {}
       extensions = {
         ['ui-select'] = {

@@ -12,8 +12,8 @@ return { -- You can easily change to a different colorscheme.
     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
     -- vim.cmd.colorscheme 'tokyonight-night'
 
-    vim.o.background = 'light'
-    -- vim.o.background = 'dark'
+    -- vim.o.background = 'light'
+    vim.o.background = 'dark'
     vim.cmd.colorscheme 'gruvbox'
 
     -- You can configure highlights by doing something like:

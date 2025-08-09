@@ -22,7 +22,9 @@ return {
     local imagePrefix = os.date('%Y-%m-%d', currentTime)
 
     -- for syntax highlighting
-    vim.opt.conceallevel = 1
+    -- vim.opt.conceallevel = 1
+    vim.opt_local.conceallevel = 2
+
 
     vim.g.vim_markdown_strikethrough = 1
 
